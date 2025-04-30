@@ -8,6 +8,13 @@ pub enum ContractError {
 
     #[error("Unauthorized")]
     Unauthorized {},
-    // Add any other custom errors you like here.
-    // Look at https://docs.rs/thiserror/1.0.21/thiserror/ for details.
+
+    #[error("User has already fully claimed their rewards")]
+    FullyClaimed {},
+
+    #[error("Insufficient contract balance: required {required}, available {available}")]
+    InsufficientBalance { required: Uint128, available: Uint128 },
+
+    #[error("Invalid total reward pool: must be at least {minimum}")]
+    InvalidRewardPool { minimum: Uint128 },
 }

@@ -32,6 +32,7 @@ pub enum ExecuteMsg {
         to_timestamp: Option<u64>,
         claim_amount: Option<u64>,
         airdrop_has_ended: Option<bool>,
+        total_reward_pool: Option<Uint128>, // Allow owner to update total reward pool
     },
 }
 
@@ -56,7 +57,6 @@ pub enum QueryMsg {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct ConfigResponse {
     pub owner: Addr,
-
     /// Timestamp since which XKP airdrops can be delegated to boostrap auction contract
     pub from_timestamp: u64,
     /// Timestamp to which XKP airdrops can be claimed
@@ -64,10 +64,12 @@ pub struct ConfigResponse {
     pub claim_amount: Uint128,
     pub airdrop_has_ended: bool,
     pub denom: String,
+    pub num_active_users: u64, // Number of users who haven't fully claimed
+    pub total_reward_pool: Uint128, // Total pool of tokens for distribution
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct  ClaimDropAddressesResponse {
+pub struct ClaimDropAddressesResponse {
     pub claim_drop_addrs: Vec<String>,
 }
 
@@ -78,5 +80,6 @@ pub struct ClaimedAmountResponse {
     pub total_claimable_amount: Uint128,
     pub current_claimable_amount: Uint128,
     pub from_timestamp: u64,
-    pub to_timestamp: u64
+    pub to_timestamp: u64,
+    pub current_per_user_amount: Uint128, // Current claimable amount per user
 }

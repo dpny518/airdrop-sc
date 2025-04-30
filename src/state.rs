@@ -29,6 +29,8 @@ pub struct State {
     pub claim_amount: u64,
     pub airdrop_has_ended: bool,
     pub denom: String,
+    pub num_active_users: u64, // Tracks number of users who haven't fully claimed
+    pub total_reward_pool: Uint128, // Total pool of tokens for distribution
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -37,6 +39,7 @@ pub struct UserInfo {
     pub claimed_amount: Uint128,
     pub total_claimable_amount: Uint128,
     pub current_claimable_amount: Uint128,
+    pub has_fully_claimed: bool, // Tracks if user has claimed their full share
 }
 
 impl Default for UserInfo {
@@ -45,6 +48,7 @@ impl Default for UserInfo {
             claimed_amount: Uint128::zero(),
             total_claimable_amount: Uint128::zero(),
             current_claimable_amount: Uint128::zero(),
+            has_fully_claimed: false,
         }
     }
 }
